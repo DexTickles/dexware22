@@ -1,0 +1,137 @@
+-- Dexware 1.0 UI by Dexware Development Team
+
+-- Create the ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "DexwareUI"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.ResetOnSpawn = false
+
+-- Main Frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 400, 0, 450)
+mainFrame.Position = UDim2.new(0.3, 0, 0.2, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Text = "Dexware"
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 28
+title.TextColor3 = Color3.new(1, 1, 1)
+title.Size = UDim2.new(1, 0, 0, 40)
+title.BackgroundTransparency = 1
+title.Parent = mainFrame
+
+-- Welcome Message
+local welcomeText = Instance.new("TextLabel")
+welcomeText.Text = "Hello! Welcome to Dexware. May we start you off\nwith some aim features?"
+welcomeText.Font = Enum.Font.SourceSans
+welcomeText.TextSize = 14
+welcomeText.TextColor3 = Color3.new(0.8, 0.8, 0.8)
+welcomeText.Size = UDim2.new(1, -20, 0, 40)
+welcomeText.Position = UDim2.new(0, 10, 0, 40)
+welcomeText.BackgroundTransparency = 1
+welcomeText.TextXAlignment = Enum.TextXAlignment.Left
+welcomeText.TextYAlignment = Enum.TextYAlignment.Top
+welcomeText.Parent = mainFrame
+
+-- Helper function to create toggles
+local function createToggle(name, positionY)
+	local toggle = Instance.new("TextButton")
+	toggle.Text = name .. ": OFF"
+	toggle.Size = UDim2.new(0.9, 0, 0, 30)
+	toggle.Position = UDim2.new(0.05, 0, 0, positionY)
+	toggle.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	toggle.TextColor3 = Color3.new(1, 1, 1)
+	toggle.Font = Enum.Font.SourceSans
+	toggle.TextSize = 18
+	toggle.Parent = mainFrame
+
+	local on = false
+	toggle.MouseButton1Click:Connect(function()
+		on = not on
+		toggle.Text = name .. ": " .. (on and "ON" or "OFF")
+	end)
+end
+
+-- Enable Aim Assist Toggle
+createToggle("Enable Aim Assist", 90)
+
+-- Aim Assist Mode (Dropdown)
+local modeLabel = Instance.new("TextLabel")
+modeLabel.Text = "Aim Assist Mode"
+modeLabel.Font = Enum.Font.SourceSans
+modeLabel.TextSize = 16
+modeLabel.TextColor3 = Color3.new(1, 1, 1)
+modeLabel.Position = UDim2.new(0.05, 0, 0, 130)
+modeLabel.Size = UDim2.new(0.9, 0, 0, 20)
+modeLabel.BackgroundTransparency = 1
+modeLabel.Parent = mainFrame
+
+local modeBox = Instance.new("TextBox")
+modeBox.PlaceholderText = "Hold"
+modeBox.Text = ""
+modeBox.Size = UDim2.new(0.9, 0, 0, 30)
+modeBox.Position = UDim2.new(0.05, 0, 0, 155)
+modeBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+modeBox.TextColor3 = Color3.new(1, 1, 1)
+modeBox.Font = Enum.Font.SourceSans
+modeBox.TextSize = 18
+modeBox.ClearTextOnFocus = false
+modeBox.Parent = mainFrame
+
+-- Keybind Input
+local keybindLabel = modeLabel:Clone()
+keybindLabel.Text = "Aim Assist Keybind"
+keybindLabel.Position = UDim2.new(0.05, 0, 0, 195)
+keybindLabel.Parent = mainFrame
+
+local keybindBox = modeBox:Clone()
+keybindBox.PlaceholderText = "E"
+keybindBox.Position = UDim2.new(0.05, 0, 0, 220)
+keybindBox.Parent = mainFrame
+
+-- Aggressiveness Slider
+local aggressionLabel = keybindLabel:Clone()
+aggressionLabel.Text = "Aim Assist Aggressiveness"
+aggressionLabel.Position = UDim2.new(0.05, 0, 0, 260)
+aggressionLabel.Parent = mainFrame
+
+local aggressionSlider = Instance.new("TextButton")
+aggressionSlider.Size = UDim2.new(0.9, 0, 0, 30)
+aggressionSlider.Position = UDim2.new(0.05, 0, 0, 285)
+aggressionSlider.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+aggressionSlider.Text = "55%"
+aggressionSlider.Font = Enum.Font.SourceSans
+aggressionSlider.TextColor3 = Color3.new(1, 1, 1)
+aggressionSlider.TextSize = 18
+aggressionSlider.Parent = mainFrame
+
+local value = 55
+aggressionSlider.MouseButton1Click:Connect(function()
+	value = (value + 5) % 105
+	aggressionSlider.Text = tostring(value) .. "%"
+end)
+
+-- FOV Radius Slider
+local fovLabel = aggressionLabel:Clone()
+fovLabel.Text = "FOV Radius"
+fovLabel.Position = UDim2.new(0.05, 0, 0, 325)
+fovLabel.Parent = mainFrame
+
+local fovSlider = aggressionSlider:Clone()
+fovSlider.Text = "150"
+fovSlider.Position = UDim2.new(0.05, 0, 0, 350)
+fovSlider.Parent = mainFrame
+
+local fov = 150
+fovSlider.MouseButton1Click:Connect(function()
+	fov = (fov + 10) % 360
+	fovSlider.Text = tostring(fov)
+end)
+
+-- Show FOV Circle Toggle
+createToggle("Show FOV Circle", 390)
+
